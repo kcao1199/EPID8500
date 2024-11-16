@@ -23,7 +23,6 @@ cleaned_data <- data %>%
     Data_value,           # Main data value
     Confidence_limit_Low, # Low confidence limit
     Confidence_limit_High,# High confidence limit
-    Data_value_unit,      # Unit of the data value
     Data_value_type       # Type of data value (e.g., prevalence)
   )
 
@@ -31,7 +30,6 @@ cleaned_data <- data %>%
 cleaned_data <- cleaned_data %>%
   filter(
     !is.na(Year) & 
-      !is.na(Locationabbr) & 
       !is.na(Topic) & 
       !is.na(Question) & 
       !is.na(Data_value)
@@ -42,7 +40,6 @@ cleaned_data <- cleaned_data %>%
   rename_with(~ str_to_lower(.), everything()) %>% # Convert column names to lowercase
   rename(
     year = year,
-    state_abbreviation = locationabbr,
     state_name = locationdesc,
     class_desc = class,
     topic_desc = topic,
@@ -51,10 +48,9 @@ cleaned_data <- cleaned_data %>%
     strat_value = break_out,
     strat_group = break_out_category,
     sample_size = sample_size,
-    data_value = data_value,
+    prevalence = data_value,
     conf_low = confidence_limit_low,
     conf_high = confidence_limit_high,
-    value_unit = data_value_unit,
     value_type = data_value_type
   )
 
