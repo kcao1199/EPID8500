@@ -32,7 +32,9 @@ cleaned_data <- cleaned_data %>%
     !is.na(Year) & 
       !is.na(Topic) & 
       !is.na(Question) & 
-      !is.na(Data_value)
+      !is.na(Data_value) &
+      !is.na(Confidence_limit_High) &
+      !is.na(Confidence_limit_Low)
   )
 
 # Standardize column names for easier usage
