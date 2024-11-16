@@ -6,7 +6,7 @@ library(summarytools)
 library(naniar)
 
 # Load the cleaned dataset
-data <- read.csv("cleaned_cdc_data.csv", stringsAsFactors = FALSE)
+data <- read.csv("../data/cleaned_cdc_data.csv", stringsAsFactors = FALSE)
 
 # Inspect the Dataset
 str(data)
