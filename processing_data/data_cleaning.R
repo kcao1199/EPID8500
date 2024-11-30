@@ -3,7 +3,7 @@ library(dplyr)
 library(stringr)
 
 # Load the dataset
-data <- read.csv("BRFSS__Table_of_HIV-AIDS_20241116.csv", stringsAsFactors = FALSE)
+data <- read.csv("data/BRFSS__Table_of_HIV-AIDS_20241116.csv", stringsAsFactors = FALSE)
 
 # View initial structure of the dataset
 str(data)
@@ -60,8 +60,13 @@ cleaned_data <- cleaned_data %>%
 cleaned_data <- cleaned_data %>%
   distinct()
 
+# Filter for Georgia-specific data
+Georgia_df <- cleaned_data %>% 
+  filter(state_name == "Georgia")
+
 # Export cleaned data to a new CSV file
-write.csv(cleaned_data, "cleaned_cdc_data.csv", row.names = FALSE)
+write.csv(cleaned_data, "data/cleaned_cdc_data.csv", row.names = FALSE)
+write.csv(Georgia_df, "data/Georgia_df.csv", row.names = FALSE)
 
 # Summary of the cleaned dataset
 summary(cleaned_data)
