@@ -4,9 +4,10 @@ library(ggplot2)
 library(DataExplorer)
 library(summarytools)
 library(naniar)
+library(here)
 
 # Load the cleaned dataset
-data <- read.csv("../data/cleaned_cdc_data.csv", stringsAsFactors = FALSE)
+data <- read.csv(here("data", "cleaned_cdc_data.csv")
 
 # Inspect the Dataset
 str(data)
@@ -22,7 +23,8 @@ gg_miss_var(data) +
 
 # Descriptive Statistics
 summary_output <- dfSummary(data)  # Summary statistics
-stview(summary_output, file = "eda_summary.html")
+stview(summary_output, file = "results/tables/eda_summary.html")
+webshot("results/tables/eda_summary.html", "results/tables/eda_summary.png")
 
 # Frequency table of selected categorical variables
 table(data$Locationdesc) 

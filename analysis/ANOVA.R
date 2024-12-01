@@ -1,11 +1,3 @@
-# Install required packages if not already installed
-if (!require("dplyr")) install.packages("dplyr")
-if (!require("tidyr")) install.packages("tidyr")
-if (!require("knitr")) install.packages("knitr")
-if (!require("kableExtra")) install.packages("kableExtra")
-if (!require("gridExtra")) install.packages("gridExtra")
-if (!require("grid")) install.packages("grid")
-
 # Load necessary libraries
 library(dplyr)
 library(tidyr)
@@ -13,9 +5,10 @@ library(knitr)
 library(kableExtra)
 library(gridExtra)
 library(grid)
+library(here)
 
 # Load and prepare the data
-data <- read.csv("data/Georgia_df.csv", stringsAsFactors = FALSE)
+data <- read.csv(here("data", "Georgia_df.csv"))
 
 # Fit an ANOVA model
 anova_model <- aov(prevalence ~ strat_value, data = data)
@@ -40,7 +33,8 @@ anova_df <- anova_df[rownames(anova_df) != "Residuals", ]
 anova_df <- anova_df[order(anova_df$pValue), ]
 
 # Save the table as a PNG file
-png("anova_results.png", width = 800, height = 600, res = 120)  # Set file name and dimensions
+path = here("results", "tables", "anova_results.png")
+png(path, width = 800, height = 600, res = 120)
 
 # Create a table using gridExtra and display it
 grid.table(anova_df)

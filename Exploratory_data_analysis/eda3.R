@@ -4,9 +4,10 @@ library(ggplot2)
 library(maps)
 library(RColorBrewer)
 library(patchwork)
+library(here)
 
 # Load the dataset
-data <- read.csv("cleaned_cdc_data.csv", stringsAsFactors = FALSE)
+data <- read.csv(here("data", "cleaned_cdc_data.csv"))
 
 #############################################################################
 #############################################################################
@@ -34,6 +35,9 @@ ggplot(combined_df, aes(x = year, y = prevalence, color = region, group = region
   labs(title = "Time Series of HIV Prevalence in Georgia vs US",
        x = "Year", y = "Prevalence (%)", color = "Region") +
   theme_minimal()
+
+figure_file = here("results", "figures", "time_series.png")
+ggsave(filename = figure_file) 
 #############################################################################
 #############################################################################
 # Distribution of prevalence rates in the US
@@ -41,6 +45,9 @@ ggplot(data, aes(x = prevalence)) +
   geom_histogram(binwidth = 1, fill = "blue", color = "white", alpha = 0.7) +
   labs(title = "Distribution of Prevalence Rates", x = "Prevalence (%)", y = "Count") +
   theme_minimal()
+
+figure_file = here("results", "figures", "distribution.png")
+ggsave(filename = figure_file) 
 
 # Age group stratification 
 age_group_df <- data %>%
@@ -74,6 +81,8 @@ ggplot(us_map_data, aes(x = long, y = lat, group = group, fill = avg_prevalence)
   labs(title = "Heatmap of HIV Prevalence Across US States", fill = "Average Prevalence (%)") +
   theme_minimal()
 
+figure_file = here("results", "figures", "heatmap.png")
+ggsave(filename = figure_file) 
 #############################################################################
 #############################################################################
 
@@ -104,6 +113,8 @@ ggplot(combined_data, aes(x = strat_group, y = prevalence, fill = strat_group)) 
     legend.position = "none"  # Remove the legend as it's unnecessary
   )
 
+figure_file = here("results", "figures", "prevalence_strat_boxplot.png")
+ggsave(filename = figure_file) 
 #############################################################################
 #############################################################################
 
@@ -120,6 +131,9 @@ ggplot(summary_data, aes(x = year, y = mean_prevalence, color = strat_group)) +
   ) + 
   labs(title = "Time Trends by Stratification Group", x = "Year", y = "Mean Prevalence (%)") +
   theme_minimal()
+
+figure_file = here("results", "figures", "time_trend_strat.png")
+ggsave(filename = figure_file) 
 
 #############################################################################
 #############################################################################

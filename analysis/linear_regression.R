@@ -1,17 +1,13 @@
-# Install required packages if not already installed
-if (!require("dplyr")) install.packages("dplyr")
-if (!require("tidyr")) install.packages("tidyr")
-if (!require("knitr")) install.packages("knitr")
-if (!require("kableExtra")) install.packages("kableExtra")
-
 # Load necessary libraries
 library(dplyr)
 library(tidyr)
 library(knitr)
 library(kableExtra)
+library(webshot)
+library(here)
 
 # Load and prepare the data
-data <- read.csv("data/Georgia_df.csv", stringsAsFactors = FALSE)
+data <- read.csv(here("data", "Georgia_df.csv"))
 
 # Fit a linear regression model
 fitall <- lm(prevalence ~ strat_value, data = data)
@@ -35,13 +31,16 @@ coef_df <- coef_df[coef_df$StratValue != "(Intercept)", ]
 coef_df <- coef_df[order(coef_df$pValue), ]
 
 # Create a formatted HTML table using kable
-table <-kable(coef_df, 
-      format = "html",
-      caption = "Table: Coefficients and p-values for Stratification Determinants (Linear Regression)",
-      digits = 4,
-      col.names = c("Determinant", "Coefficient", "Standard Error", "t-Value", "p-Value"),
-      row.names = FALSE) %>%
+table <- kable(coef_df, 
+               format = "html",
+               caption = "Table: Coefficients and p-values for Stratification Determinants (Linear Regression)",
+               digits = 4,
+               col.names = c("Determinant", "Coefficient", "Standard Error", "t-Value", "p-Value"),
+               row.names = FALSE) %>%
   kable_styling(bootstrap_options = c("striped", "hover", "condensed"), 
                 full_width = FALSE)
-# Save it
-save_kable(table, file = "linear_regression.html")
+
+path = here("results", "tables", "linear_regression.html")
+# Save the table as an HTML file
+save_kable(table, file = path)
+webshot(path, "results/tables/linear_regression.png")
