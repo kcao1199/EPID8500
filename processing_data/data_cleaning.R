@@ -64,9 +64,14 @@ cleaned_data <- cleaned_data %>%
 Georgia_df <- cleaned_data %>% 
   filter(state_name == "Georgia")
 
+# Filtered for latest data
+HIV_2023 <-cleaned_data %>% 
+  filter(year == "2023")
+
 # Export cleaned data to a new CSV file
 write.csv(cleaned_data, "data/cleaned_cdc_data.csv", row.names = FALSE)
 write.csv(Georgia_df, "data/Georgia_df.csv", row.names = FALSE)
+write.csv(HIV_2023, "data/HIV_2023.csv", row.names = FALSE)
 
 # Summary of the cleaned dataset
 summary(cleaned_data)

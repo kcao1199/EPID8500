@@ -78,7 +78,7 @@ print(metrics)  # Print performance metrics
 # Check for multicollinearity 
 print(vif(lm(prevalence ~ ., data = train_data)))
 
-z# Extract non-zero coefficients from the final model
+# Extract non-zero coefficients from the final model
 lasso_fit <- pull_workflow_fit(final_lasso_model)
 ranked_determinants <- tidy(lasso_fit$fit) %>%
   filter(estimate != 0) %>%  # Keep only non-zero coefficients
